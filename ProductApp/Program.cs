@@ -245,7 +245,8 @@ namespace ProductApp
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-       
+        #region ExportToExcel Methods
+
         private static string ExportToExcel(int userchoice, List<Product> productList)
         {
             string OutPutFileDirectory = string.Empty;
@@ -277,7 +278,7 @@ namespace ProductApp
             WorksheetPart worksheetPart1 = workbookPart1.AddNewPart<WorksheetPart>("rId1");
             GenerateWorksheetPartContent(worksheetPart1, partSheetData);
         }
-        private static void GenerateWorkbookStylesPartContent(WorkbookStylesPart workbookStylesPart1)   
+        private static void GenerateWorkbookStylesPartContent(WorkbookStylesPart workbookStylesPart1)
         {
             Stylesheet stylesheet1 = new Stylesheet() { MCAttributes = new MarkupCompatibilityAttributes() { Ignorable = "x14ac" } };
             stylesheet1.AddNamespaceDeclaration("mc", "http://schemas.openxmlformats.org/markup-compatibility/2006");
@@ -498,7 +499,7 @@ namespace ProductApp
         private static Row CreateHeaderRowForExcel()
         {
             Row workRow = new Row();
-            
+
             workRow.Append(CreateCell("Product Id", 2U));
             workRow.Append(CreateCell("Name", 2U));
             workRow.Append(CreateCell("Brand Id", 2U));
@@ -528,10 +529,13 @@ namespace ProductApp
                 return CellValues.String;
             }
         }
+        #endregion
 
+
+        #region ImportFromExcel Methods
         private static List<Product> ImportFromExcel()
         {
-            List<Product> products = new List<Product>();           
+            List<Product> products = new List<Product>();
             try
             {
                 //specify the file name where its actually exist   
@@ -540,10 +544,8 @@ namespace ProductApp
                 //open the excel using openxml sdk  
                 using (SpreadsheetDocument doc = SpreadsheetDocument.Open(filepath, false))
                 {
-
                     //create the object for workbook part  
                     WorkbookPart wbPart = doc.WorkbookPart;
-
                     //statement to get the count of the worksheet  
                     int worksheetcount = doc.WorkbookPart.Workbook.Sheets.Count();
 
@@ -556,7 +558,6 @@ namespace ProductApp
                     //Note: worksheet has 8 children and the first child[1] = sheetviewdimension,....child[4]=sheetdata  
                     int wkschildno = 4;
 
-
                     //statement to get the sheetdata which contains the rows and cell in table  
                     SheetData Rows = (SheetData)Worksheet.ChildElements.GetItem(wkschildno);
 
@@ -567,20 +568,13 @@ namespace ProductApp
                         Product p = GetProductFromRow(currentrow, wbPart);
                         products.Add(p);
                     }
-
-                    //getting the row as per the specified index of getitem method  
-
-                    //getting the cell as per the specified index of getitem method  
-                   
-
                 }
             }
             catch (Exception Ex)
             {
                 _ = Ex.Message;
             }
-          return products;
-
+            return products;
         }
         private static Product GetProductFromRow(Row currentrow, WorkbookPart wbPart)
         {
@@ -594,7 +588,7 @@ namespace ProductApp
             //double dateFromExcel = double.Parse(manufacturingDateFromExcel);
             //var date = DateTime.FromOADate(dateFromExcel);
             DateTime date = DateTime.Parse(manufacturingDateFromExcel);
-            product = new Product(productId,productName, brandId, date);
+            product = new Product(productId, productName, brandId, date);
             return product;
         }
 
@@ -633,6 +627,8 @@ namespace ProductApp
         {
             return workbookPart.SharedStringTablePart.SharedStringTable.Elements<SharedStringItem>().ElementAt(id);
         }
+
+        #endregion
 
         //private static string IsNameValid(string name)
         //{
