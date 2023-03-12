@@ -1,17 +1,12 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
-
+using System.Linq;
 using X14 = DocumentFormat.OpenXml.Office2010.Excel;
 using X15 = DocumentFormat.OpenXml.Office2013.Excel;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
-using System.Runtime.InteropServices;
-using System.Linq;
-using System.IO.Packaging;
 
 namespace ProductApp
 {
@@ -51,11 +46,9 @@ namespace ProductApp
                         break;
 
                     case 6:
-                        Console.WriteLine("Where do you want to import Excel sheet?\nPress 1");
-                        //int userchoice = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Show import Excel sheet.");
                         productList = ImportFromExcel();
                         TabularFormat();
-
                         Console.WriteLine($"file has been succesfully Imported ");
                         break;
                 }
