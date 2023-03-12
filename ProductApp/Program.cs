@@ -20,8 +20,7 @@ namespace ProductApp
             char again;
             do
             {
-                Console.WriteLine("Select your choice from following Menu : \n1. Add.\n2. Delete.\n3. Update\n4. Show List in Tabular Format.\n5. Export To Excel.\n6. Import From Excel.\n7. Exit Program.\nEnter Your Choice : ");
-              
+                Menu();
                 option = int.Parse(Console.ReadLine());
                 switch (option) 
                 {
@@ -166,9 +165,15 @@ namespace ProductApp
 
         }
 
-       
+
+
 
         #region Static Methods
+        private static void Menu()
+        {
+            Console.WriteLine("Select your choice from following Menu : \n1. Add.\n2. Delete.\n3. Update\n4. Show List in Tabular Format.\n5. Export To Excel.\n6. Import From Excel.\n7. Exit Program.\nEnter Your Choice : ");
+        }
+
         private static string GetName()
         {
             Console.WriteLine("Enter Name : ");
